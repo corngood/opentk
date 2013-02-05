@@ -477,6 +477,66 @@ namespace OpenTK
             return Normalize(result);
         }
 
+		/// <summary>
+		/// Build a quaternion from the given rotation matrix
+		/// from: http://www.flipcode.com/documents/matrfaq.html#Q55
+		/// </summary>
+		/// <param name="matrix">The matrix representing the rotation (only first 3x3 is used)</param>
+		/// <returns></returns>
+		public static Quaternion FromRotationMatrix(Matrix4 matrix)
+		{
+			var q = new Quaternion();
+
+			float a = matrix.M11, b = matrix.M22, c = matrix.M33;
+
+			var T = a + b + c + 1;
+
+			if (T > 0)
+			{
+				var S = 0.5f / (float)Math.Sqrt(T);
+				q.Xyz = new Vector3(
+					(matrix.M23 - matrix.M32) * S,
+					(matrix.M31 - matrix.M13) * S,
+					(matrix.M12 - matrix.M21) * S);
+				q.W = 0.25f / S;
+			}
+			else
+			{
+				if (a >= b && a >= c)
+				{
+					var S = (float)Math.Sqrt(1f + a - b - c) * 2f;
+
+					q.Xyz = new Vector3(
+						0.5f / S,
+						(matrix.M21 + matrix.M12) / S,
+						(matrix.M31 + matrix.M13) / S);
+					q.W = (matrix.M32 + matrix.M23) / S;
+				}
+				else if (b >= c)
+				{
+					var S = (float)Math.Sqrt(1f + b - a - c) * 2f;
+				
+					q.Xyz = new Vector3(
+						(matrix.M21 + matrix.M12) / S,
+						0.5f / S,
+						(matrix.M32 + matrix.M23) / S);
+					q.W = (matrix.M31 + matrix.M13) / S;
+				}
+				else
+				{
+					var S = (float)Math.Sqrt(1f + c - a - b) * 2f;
+
+					q.Xyz = new Vector3(
+						(matrix.M31 + matrix.M13) / S,
+						(matrix.M32 + matrix.M23) / S,
+						0.5f / S);
+					q.W = (matrix.M21 + matrix.M12) / S;
+				}
+			}
+
+			return q;
+		}
+
         #endregion
 
         #region Slerp
@@ -550,7 +610,17 @@ namespace OpenTK
 
         #region Operators
 
-        /// <summary>
+		/// <summary>
+		/// Negates a quaternion
+		/// </summary>
+		/// <param name="that">The instance.</param>
+		/// <returns>The result of the calculation.</returns>
+		public static Quaternion operator -(Quaternion that)
+		{
+			return new Quaternion(-that.Xyz, -that.w);
+		}
+
+		/// <summary>
         /// Adds two instances.
         /// </summary>
         /// <param name="left">The first instance.</param>

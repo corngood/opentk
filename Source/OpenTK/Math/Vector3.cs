@@ -82,15 +82,11 @@ namespace OpenTK
             Z = z;
         }
 
-        /// <summary>
-        /// Constructs a new Vector3 from the given Vector2.
-        /// </summary>
-        /// <param name="v">The Vector2 to copy components from.</param>
-        public Vector3(Vector2 v)
+        public Vector3(Vector2 v, float z = 0f)
         {
             X = v.X;
             Y = v.Y;
-            Z = 0.0f;
+            Z = z;
         }
 
         /// <summary>

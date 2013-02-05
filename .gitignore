@@ -2,3 +2,9 @@
 /Binaries/
 obj/
 bin/
+/OpenTK.userprefs
+/Source/GLControl/OpenTK.GLControl.xml
+/Source/GlobalAssemblyInfo.cs
+/Source/OpenTK/OpenTK.xml
+/Version.txt
+*~

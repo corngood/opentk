@@ -20,7 +20,7 @@ namespace Examples.Tutorial
     public class T04_Vertex_Lighting : GameWindow
     {
         float x_angle, zoom;
-        Shape shape = new Plane(16, 16, 4.0f, 4.0f);
+        Shape shape = new Shapes.Plane(16, 16, 4.0f, 4.0f);
 
         #region Constructor
 

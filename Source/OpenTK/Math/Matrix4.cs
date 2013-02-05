@@ -58,6 +58,8 @@ namespace OpenTK
         /// </summary>
         public static Matrix4 Identity = new Matrix4(Vector4.UnitX, Vector4.UnitY, Vector4.UnitZ, Vector4.UnitW);
 
+        public static Matrix4 Zero = new Matrix4(Vector4.Zero, Vector4.Zero, Vector4.Zero, Vector4.Zero);
+
         #endregion
 
         #region Constructors
@@ -1137,7 +1139,67 @@ namespace OpenTK
             return Matrix4.Mult(left, right);
         }
 
-        /// <summary>
+		/// <summary>
+		/// Matrix multiplication
+		/// </summary>
+		/// <param name="left">left-hand operand</param>
+		/// <param name="right">right-hand operand</param>
+		/// <returns>A new Matrix44 which holds the result of the multiplication</returns>
+		public static Matrix4 operator *(Matrix4 left, float right)
+		{
+			return new Matrix4(
+				left.Row0 * right,
+				left.Row1 * right,
+				left.Row2 * right,
+				left.Row3 * right);
+		}
+
+		/// <summary>
+		/// Matrix multiplication
+		/// </summary>
+		/// <param name="left">left-hand operand</param>
+		/// <param name="right">right-hand operand</param>
+		/// <returns>A new Matrix44 which holds the result of the multiplication</returns>
+		public static Matrix4 operator *(float left, Matrix4 right)
+		{
+			return new Matrix4(
+				left * right.Row0,
+				left * right.Row1,
+				left * right.Row2,
+				left * right.Row3);
+		}
+
+		/// <summary>
+		/// Matrix addition
+		/// </summary>
+		/// <param name="left">left-hand operand</param>
+		/// <param name="right">right-hand operand</param>
+		/// <returns>A new Matrix44 which holds the result of the addition</returns>
+		public static Matrix4 operator +(Matrix4 left, Matrix4 right)
+		{
+			return new Matrix4(
+				left.Row0 + right.Row0,
+				left.Row1 + right.Row1,
+				left.Row2 + right.Row2,
+				left.Row3 + right.Row3);
+		}
+
+		/// <summary>
+		/// Matrix subtraction
+		/// </summary>
+		/// <param name="left">left-hand operand</param>
+		/// <param name="right">right-hand operand</param>
+		/// <returns>A new Matrix44 which holds the result of the subtraction</returns>
+		public static Matrix4 operator -(Matrix4 left, Matrix4 right)
+		{
+			return new Matrix4(
+				left.Row0 - right.Row0,
+				left.Row1 - right.Row1,
+				left.Row2 - right.Row2,
+				left.Row3 - right.Row3);
+		}
+
+		/// <summary>
         /// Compares two instances for equality.
         /// </summary>
         /// <param name="left">The first instance.</param>
